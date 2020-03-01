@@ -1,4 +1,9 @@
 {
+  "build": {
+    "env": {
+      "REACT_APP_AIRTABLE_API_KEY": "@airtable-api"
+    }
+  },
   "github": {
     "silent": true
   }
