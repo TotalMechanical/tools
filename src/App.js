@@ -1,55 +1,40 @@
-import React from 'react';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './App.css';
 
+import Airtable from 'airtable';
+
+const base = new Airtable({
+  apiKey: process.env.REACT_APP_AIRTABLE_API_KEY
+}).base(process.env.REACT_APP_AIRTABLE_BASE_ID);
+const inventory = base('Inventory');
+
 function App() {
-  const [date, setDate] = useState(null);
+  const [data, setData] = useState([]);
+
   useEffect(() => {
-    async function getDate() {
-      const res = await fetch('/api/date');
-      const newDate = await res.text();
-      setDate(newDate);
-    }
-    getDate();
+    inventory
+      .select({ view: 'All Tools' })
+      .all()
+      .then(records => {
+        console.log('Records', records);
+        setData(records);
+      });
   }, []);
+
   return (
     <main>
-      <h1>Create React App + Go API</h1>
-      <h2>
-        Deployed with{' '}
-        <a
-          href="https://zeit.co/docs"
-          target="_blank"
-          rel="noreferrer noopener"
-        >
-          ZEIT Now
-        </a>
-        !
-      </h2>
-      <p>
-        <a
-          href="https://github.com/zeit/now/tree/master/examples/create-react-app"
-          target="_blank"
-          rel="noreferrer noopener"
-        >
-          This project
-        </a>{' '}
-        was bootstrapped with{' '}
-        <a href="https://facebook.github.io/create-react-app/">
-          Create React App
-        </a>{' '}
-        and contains three directories, <code>/public</code> for static assets,{' '}
-        <code>/src</code> for components and content, and <code>/api</code>{' '}
-        which contains a serverless <a href="https://golang.org/">Go</a>{' '}
-        function. See{' '}
-        <a href="/api/date">
-          <code>api/date</code> for the Date API with Go
-        </a>
-        .
-      </p>
-      <br />
-      <h2>The date according to Go is:</h2>
-      <p>{date ? date : 'Loading date...'}</p>
+      {data.map(record => (
+        <div className="record" key={record.id}>
+          <p>{record.fields['Tool ID']}</p>
+          <p>{record.fields['Type']}</p>
+          <p>{record.fields['Serial']}</p>
+          <p>{record.fields['Description']}</p>
+          <p>{record.fields['Model']}</p>
+          <p>{record.fields['Purchase Date']}</p>
+          <p>{record.fields['Status']}</p>
+          <p>{record.fields['Assigned To']}</p>
+        </div>
+      ))}
     </main>
   );
 }
