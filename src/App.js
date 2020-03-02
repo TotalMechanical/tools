@@ -13,7 +13,7 @@ function App() {
 
   useEffect(() => {
     inventory
-      .select({ view: 'All Tools' })
+      .select({ view: 'DO NOT TOUCH - API' })
       .all()
       .then(records => {
         console.log('Records', records);
