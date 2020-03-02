@@ -23,6 +23,14 @@ function App() {
 
   return (
     <main>
+      <iframe
+        className="airtable-embed"
+        title="Specialty Tools Calendar"
+        src="https://airtable.com/embed/shrgP7DXhPWLAqpf1?backgroundColor=gray"
+        frameBorder="0"
+        width="100%"
+        height="533"
+      ></iframe>
       {data.map(record => (
         <div className="record" key={record.id}>
           <p>{record.fields['Tool ID']}</p>
