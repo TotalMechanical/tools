@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import './App.css';
 
 import Airtable from 'airtable';
@@ -11,10 +11,10 @@ const base = new Airtable({
 const inventory = base('Inventory');
 
 function App() {
-  const [tools, setTools] = useState([]);
-  const [specialty, setSpecialty] = useState([]);
+  const [tools, setTools] = React.useState([]);
+  const [specialty, setSpecialty] = React.useState([]);
 
-  useEffect(() => {
+  React.useEffect(() => {
     inventory
       .select({
         view: 'DO NOT TOUCH - API',
@@ -32,16 +32,17 @@ function App() {
 
   return (
     <>
-      <h1>{foreman}</h1>
       <main>
-        {/* <iframe
-        className="airtable-embed"
-        title="Specialty Tools Calendar"
-        src="https://airtable.com/embed/shrgP7DXhPWLAqpf1?backgroundColor=gray"
-        frameBorder="0"
-        width="100%"
-        height="533"
-      /> */}
+        <h3>Specialty Tools Calendar</h3>
+        <iframe
+          className="airtable-embed"
+          title="Specialty Tools Calendar"
+          src="https://airtable.com/embed/shrgP7DXhPWLAqpf1?backgroundColor=gray"
+          frameBorder="0"
+          width="100%"
+          height="533"
+        />
+        <h1>{foreman}</h1>
         {specialty.length > 0 && (
           <section className="specialty">
             <h3>My Specialty Tool Loans</h3>
