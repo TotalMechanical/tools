@@ -11,7 +11,8 @@ const base = new Airtable({
 const inventory = base('Inventory');
 
 function App() {
-  const [data, setData] = useState([]);
+  const [tools, setTools] = useState([]);
+  const [specialty, setSpecialty] = useState([]);
 
   useEffect(() => {
     inventory
@@ -22,7 +23,10 @@ function App() {
       .all()
       .then(recs => {
         console.log('Records', recs);
-        setData([...recs]);
+        setTools([...recs.filter(rec => rec.fields['Type'] !== 'Specialty')]);
+        setSpecialty([
+          ...recs.filter(rec => rec.fields['Type'] === 'Specialty')
+        ]);
       });
   }, []);
 
@@ -38,15 +42,31 @@ function App() {
         width="100%"
         height="533"
       /> */}
-        {data.map(rec => (
-          <div className="record" key={rec.id}>
-            <p>{rec.fields['Type']}</p>
-            <p>{rec.fields['Tool ID']}</p>
-            <p>{rec.fields['Description']}</p>
-            <p>{rec.fields['Status']}</p>
-            <p>{rec.fields['Assigned To']}</p>
-          </div>
-        ))}
+        {specialty.length > 0 && (
+          <section className="specialty">
+            <h3>My Specialty Tool Loans</h3>
+            {specialty.map(rec => (
+              <div className="record" key={rec.id}>
+                <p>{rec.fields['Description']}</p>
+                <p>{rec.fields['Tool ID']}</p>
+                <p>{rec.fields['Loan Start']}</p>
+                <p>{rec.fields['Loan End']}</p>
+                <p>{rec.fields['Assigned To']}</p>
+              </div>
+            ))}
+          </section>
+        )}
+        <section className="tools">
+          {tools.map(rec => (
+            <div className="record" key={rec.id}>
+              <p>{rec.fields['Type']}</p>
+              <p>{rec.fields['Tool ID']}</p>
+              <p>{rec.fields['Description']}</p>
+              <p>{rec.fields['Status']}</p>
+              <p>{rec.fields['Assigned To']}</p>
+            </div>
+          ))}
+        </section>
       </main>
     </>
   );

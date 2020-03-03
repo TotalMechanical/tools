@@ -2,6 +2,12 @@ main {
   padding: 10px;
 }
 
+.specialty {
+  padding: 10px;
+  margin-bottom: 20px;
+  background-color: #efefef;
+}
+
 .record {
   display: flex;
   justify-content: space-between;
