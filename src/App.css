@@ -1,18 +1,16 @@
 main {
-  display: flex;
-  flex-flow: row wrap;
-  justify-content: space-between;
   padding: 10px;
 }
 
 .record {
-  flex: 0 21.5%;
+  display: flex;
+  justify-content: space-between;
   padding: 10px;
-  margin-bottom: 20px;
-  background-color: lightgray;
+  border-bottom: 1px solid lightgray;
 }
 
 p {
+  width: 25%;
   margin: 0;
 }
 
