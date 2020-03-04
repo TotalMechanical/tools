@@ -24,12 +24,15 @@ export default function App() {
       <Nav />
 
       <Switch>
-        <Route exact path="/">
-          <Login />
-        </Route>
-        <PrivateRoute path="/tools">
+        <PrivateRoute exact path="/">
           <Tools />
         </PrivateRoute>
+        <PrivateRoute path="/specialty">
+          <Specialty />
+        </PrivateRoute>
+        <Route path="/login">
+          <Login />
+        </Route>
       </Switch>
     </Router>
   );
@@ -40,7 +43,7 @@ function PrivateRoute({ children, ...rest }) {
     <Route
       {...rest}
       render={() =>
-        localStorage.getItem('foreman') ? children : <Redirect to="/" />
+        localStorage.getItem('foreman') ? children : <Redirect to="/login" />
       }
     />
   );
@@ -53,22 +56,25 @@ function Nav() {
   const logout = e => {
     e.preventDefault();
     localStorage.removeItem('foreman');
-    history.push('/');
+    history.push('/login');
   };
   return (
-    <nav>
-      <h3>
-        <MdBuild /> TOOLS
-      </h3>
-      {foreman && (
-        <div className="foreman">
-          <p>{foreman}</p>
-          <button onClick={logout}>
-            <MdExitToApp /> Logout
-          </button>
-        </div>
-      )}
-    </nav>
+    <>
+      <nav>
+        <h3>
+          <MdBuild /> TOOLS
+        </h3>
+        {foreman && (
+          <div className="foreman">
+            <p>{foreman}</p>
+            <button onClick={logout}>
+              <MdExitToApp /> Logout
+            </button>
+          </div>
+        )}
+      </nav>
+      {foreman && <SubNav />}
+    </>
   );
 }
 
@@ -97,7 +103,7 @@ function Login() {
   const login = e => {
     e.preventDefault();
     localStorage.setItem('foreman', foreman);
-    history.push('/tools');
+    history.push('/');
   };
 
   return (
@@ -119,8 +125,18 @@ function Login() {
   );
 }
 
+function SubNav() {
+  return (
+    <div className="sub-nav">
+      <NavLink exact to="/">
+        My Tools
+      </NavLink>
+      <NavLink to="/specialty">Specialty</NavLink>
+    </div>
+  );
+}
+
 function Tools() {
-  const { path, url } = useRouteMatch();
   const foreman = localStorage.getItem('foreman');
   const [tools, setTools] = React.useState([]);
   const [specialty, setSpecialty] = React.useState([]);
@@ -147,51 +163,46 @@ function Tools() {
   }, [foreman]);
 
   return (
-    <main>
-      <div className="sub-nav">
-        <NavLink exact to={`${url}`}>
-          My Tools
-        </NavLink>
-        <NavLink to={`${url}/specialty`}>Specialty</NavLink>
-      </div>
-      <Switch>
-        <Route exact path={path}>
-          {specialty.length > 0 && (
-            <section className="specialty">
-              <h3>My Specialty Tool Loans</h3>
-              {specialty.map(rec => (
-                <div className="record" key={rec.id}>
-                  <p>{rec['Description']}</p>
-                  <p>{rec['Tool ID']}</p>
-                  <p>{rec['Loan Start']}</p>
-                  <p>{rec['Loan End']}</p>
-                </div>
-              ))}
-            </section>
-          )}
-          <section className="tools">
-            {tools.map(rec => (
-              <div className="record" key={rec.id}>
-                <p>{rec['Type']}</p>
-                <p>{rec['Tool ID']}</p>
-                <p>{rec['Description']}</p>
-                <p>{rec['Status']}</p>
-              </div>
-            ))}
-          </section>
-        </Route>
-        <Route path={`${path}/specialty`}>
-          <h3>Specialty Tools Calendar</h3>
-          <iframe
-            className="airtable-embed"
-            title="Specialty Tools Calendar"
-            src="https://airtable.com/embed/shrgP7DXhPWLAqpf1?backgroundColor=gray"
-            frameBorder="0"
-            width="100%"
-            height="533"
-          />
-        </Route>
-      </Switch>
-    </main>
+    <>
+      {specialty.length > 0 && (
+        <section className="specialty">
+          <h3>My Specialty Tool Loans</h3>
+          {specialty.map(rec => (
+            <div className="record" key={rec.id}>
+              <p>{rec['Description']}</p>
+              <p>{rec['Tool ID']}</p>
+              <p>{rec['Loan Start']}</p>
+              <p>{rec['Loan End']}</p>
+            </div>
+          ))}
+        </section>
+      )}
+      <section className="tools">
+        {tools.map(rec => (
+          <div className="record" key={rec.id}>
+            <p>{rec['Type']}</p>
+            <p>{rec['Tool ID']}</p>
+            <p>{rec['Description']}</p>
+            <p>{rec['Status']}</p>
+          </div>
+        ))}
+      </section>
+    </>
+  );
+}
+
+function Specialty() {
+  return (
+    <>
+      <h3>Specialty Tools Calendar</h3>
+      <iframe
+        className="airtable-embed"
+        title="Specialty Tools Calendar"
+        src="https://airtable.com/embed/shrgP7DXhPWLAqpf1?backgroundColor=gray"
+        frameBorder="0"
+        width="100%"
+        height="533"
+      />
+    </>
   );
 }

@@ -1,15 +1,14 @@
 nav {
   display: flex;
   justify-content: space-between;
+  color: white;
+  background-color: #222;
+  margin-bottom: 10px;
 }
 
 .foreman {
   width: 35%;
   display: flex;
-}
-
-main {
-  padding: 10px;
 }
 
 .specialty {
