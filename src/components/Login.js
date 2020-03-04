@@ -10,7 +10,7 @@ export default function Login() {
   React.useEffect(() => {
     base('Foreman')
       .select({
-        view: 'DO NOT TOUCH - API',
+        view: 'API',
         fields: ['Name']
       })
       .all()

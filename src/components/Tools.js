@@ -13,7 +13,7 @@ export default function Tools() {
     const fetchTools = () => {
       base('Inventory')
         .select({
-          view: 'DO NOT TOUCH - API',
+          view: 'API Foreman',
           filterByFormula: `({Assigned To} = '${foreman}')`
         })
         .all()
@@ -63,6 +63,13 @@ export default function Tools() {
               <p>{rec['Tool ID']}</p> */}
               <p>{rec['Description']}</p>
               <p>{rec['Status']}</p>
+              <p>
+                <button>
+                  <span role="img" aria-label="yellow warning sign">
+                    ⚠️
+                  </span>{' '}
+                </button>
+              </p>
             </div>
           ))}
         </section>

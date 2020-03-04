@@ -20,9 +20,9 @@ nav {
   align-items: center;
   height: 40px;
   color: white;
-  background-color: #222;
+  background-color: green;
   padding: 10px;
-  margin-bottom: 10px;
+  margin-bottom: 20px;
 
   h3 {
     margin: 0;
@@ -75,6 +75,12 @@ p {
   .active {
     background-color: lightgrey;
   }
+}
+
+.header-cal {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 iframe {

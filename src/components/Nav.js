@@ -1,6 +1,5 @@
 import React from 'react';
 import { NavLink, useHistory } from 'react-router-dom';
-import { MdBuild } from 'react-icons/md';
 
 export default function Nav() {
   const foreman = localStorage.getItem('foreman');
@@ -15,7 +14,10 @@ export default function Nav() {
     <>
       <nav>
         <h3>
-          <MdBuild /> TOOLS
+          <span role="img" aria-label="hammer and wrench">
+            🛠
+          </span>{' '}
+          TOOLS
         </h3>
         {foreman && (
           <div className="foreman">
