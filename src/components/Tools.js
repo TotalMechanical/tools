@@ -33,8 +33,7 @@ export default function Tools() {
           setSpecialty(records.filter(rec => rec['Type'] === 'Specialty'));
         });
     };
-
-    fetchTools();
+    if (!lastFetch || Number(lastFetch) - Number(t) < 10) fetchTools();
   }, []);
 
   if (!lastFetch) {
