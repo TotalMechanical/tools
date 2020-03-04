@@ -7,8 +7,6 @@ import PrivateRoute from './components/PrivateRoute';
 import Tools from './components/Tools';
 import Specialty from './components/Specialty';
 
-import './App.css';
-
 export default function App() {
   return (
     <Router>

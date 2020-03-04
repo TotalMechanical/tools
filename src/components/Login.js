@@ -4,8 +4,8 @@ import base from '../helpers/data';
 
 export default function Login() {
   const history = useHistory();
-  const [foreman, setForeman] = React.useState('');
-  const [foremanList, setForemanList] = React.useState([]);
+  const [identity, setIdentity] = React.useState('');
+  const [list, setList] = React.useState([]);
 
   React.useEffect(() => {
     base('Foreman')
@@ -14,37 +14,37 @@ export default function Login() {
         fields: ['Name']
       })
       .all()
-      .then(recs => {
-        const list = recs.map(el => el.fields['Name']);
-        setForemanList(list);
+      .then(res => {
+        const list = res.map(name => name.fields['Name']);
+        setList(list);
       });
   }, []);
 
   const handleChange = e => {
-    setForeman(e.target.value);
+    setIdentity(e.target.value);
   };
 
   const login = e => {
     e.preventDefault();
-    localStorage.setItem('foreman', foreman);
+    localStorage.setItem('foreman', identity);
     history.push('/');
   };
 
   return (
-    <>
+    <div className="login">
       <h1>Total Mechanical Tools</h1>
       <label htmlFor="foreman-list">Who are you?</label>
       <select id="foreman-list" onChange={handleChange}>
         <option value="">~ Select your name ~</option>
-        {foremanList.map(name => (
+        {list.map(name => (
           <option key={name} value={name}>
             {name}
           </option>
         ))}
       </select>
-      <button onClick={login} disabled={!foreman}>
+      <button onClick={login} disabled={!identity}>
         GO
       </button>
-    </>
+    </div>
   );
 }

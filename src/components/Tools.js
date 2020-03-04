@@ -8,11 +8,6 @@ export default function Tools() {
   const [tools, setTools] = useLocalStorage('tools', []);
   const [specialty, setSpecialty] = useLocalStorage('specialty', []);
 
-  console.log('foreman ···', foreman);
-  console.log('lastFetch ···', lastFetch);
-  console.log('tools ···', tools);
-  console.log('specialty ···', specialty);
-
   React.useEffect(() => {
     const fetchTools = () => {
       base('Inventory')
