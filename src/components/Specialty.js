@@ -2,7 +2,7 @@ import React from 'react';
 // import base from '../helpers/data';
 
 export default function Specialty() {
-  const [showCal, setShowCal] = React.useState(true);
+  const [showCal, setShowCal] = React.useState(false);
   const toggleCal = () => {
     setShowCal(prev => !prev);
   };
