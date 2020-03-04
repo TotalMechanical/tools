@@ -1,6 +1,6 @@
 import React from 'react';
 import { NavLink, useHistory } from 'react-router-dom';
-import { MdBuild, MdExitToApp } from 'react-icons/md';
+import { MdBuild } from 'react-icons/md';
 
 export default function Nav() {
   const foreman = localStorage.getItem('foreman');
@@ -20,9 +20,7 @@ export default function Nav() {
         {foreman && (
           <div className="foreman">
             <p>{foreman}</p>
-            <button onClick={logout}>
-              <MdExitToApp /> Logout
-            </button>
+            <button onClick={logout}>Logout</button>
           </div>
         )}
       </nav>

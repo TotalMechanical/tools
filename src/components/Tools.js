@@ -9,6 +9,7 @@ export default function Tools() {
   const [specialty, setSpecialty] = useLocalStorage('specialty', []);
 
   React.useEffect(() => {
+    const t = new Date().toJSON();
     const fetchTools = () => {
       base('Inventory')
         .select({
@@ -21,15 +22,20 @@ export default function Tools() {
             id: rec.id,
             ...rec.fields
           }));
-          const timestamp = new Date().toLocaleDateString();
-          setLastFetch(timestamp);
+
+          const num = t
+            .match(/[0-9]{2,}/g)
+            .slice(0, 5)
+            .join('');
+
+          setLastFetch(num);
           setTools(records.filter(rec => rec['Type'] !== 'Specialty'));
           setSpecialty(records.filter(rec => rec['Type'] === 'Specialty'));
         });
     };
 
-    if (!lastFetch) fetchTools();
-  });
+    fetchTools();
+  }, []);
 
   if (!lastFetch) {
     return <h3>Loading...</h3>;
@@ -41,8 +47,9 @@ export default function Tools() {
             <h3>My Specialty Tool Loans</h3>
             {specialty.map(rec => (
               <div className="record" key={rec.id}>
+                <p>{rec['Name']}</p>
                 <p>{rec['Description']}</p>
-                <p>{rec['Tool ID']}</p>
+                {/* <p>{rec['Tool ID']}</p> */}
                 <p>{rec['Loan Start']}</p>
                 <p>{rec['Loan End']}</p>
               </div>
@@ -52,8 +59,9 @@ export default function Tools() {
         <section className="tools">
           {tools.map(rec => (
             <div className="record" key={rec.id}>
-              <p>{rec['Type']}</p>
-              <p>{rec['Tool ID']}</p>
+              <p>{rec['Name']}</p>
+              {/* <p>{rec['Type']}</p>
+              <p>{rec['Tool ID']}</p> */}
               <p>{rec['Description']}</p>
               <p>{rec['Status']}</p>
             </div>
