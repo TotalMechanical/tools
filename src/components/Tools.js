@@ -11,7 +11,7 @@ import ToolList from './ToolsList';
 export default function Tools() {
   const [foreman, setForeman] = useLocalStorage('foreman', {});
   const [data, setData] = useLocalStorage('data', {});
-  const [specialty, setSpecialty] = useLocalStorage('specialty', {});
+  const [, setSpecialty] = useLocalStorage('specialty', {});
 
   React.useEffect(() => {
     const fetch = async () => {
@@ -44,13 +44,13 @@ export default function Tools() {
         ...data,
         fetched: fetched,
         tools: tools,
-        specialty: specialtyTools.filter(el => {
-          const assigned = el['Assigned To'];
-          if (assigned) return assigned[0] === foreman.id;
-        })
+        specialty: specialtyTools.filter(
+          el => el['Assigned To'] && el['Assigned To'][0] === foreman.id
+        )
       });
     };
-    if (!data.fetched || Date.now() - data.fetched > 900000) fetch();
+    // Will allow fetch if no data or it's been 30 sec since last fetch
+    if (!data.fetched || Date.now() - data.fetched > 30000) fetch();
   }, []);
 
   return data && data.tools ? (

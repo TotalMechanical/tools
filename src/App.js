@@ -1,5 +1,10 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import {
+  BrowserRouter as Router,
+  Route,
+  Switch,
+  NavLink
+} from 'react-router-dom';
 
 import Nav from './components/Nav';
 import Login from './components/Login';
@@ -14,10 +19,12 @@ export default function App() {
 
       <Switch>
         <PrivateRoute exact path="/">
+          <SubNav />
           <Tools />
         </PrivateRoute>
 
         <PrivateRoute path="/specialty">
+          <SubNav />
           <Specialty />
         </PrivateRoute>
 
@@ -26,5 +33,16 @@ export default function App() {
         </Route>
       </Switch>
     </Router>
+  );
+}
+
+function SubNav() {
+  return (
+    <div className="sub-nav">
+      <NavLink exact to="/">
+        My Tools
+      </NavLink>
+      <NavLink to="/specialty">Specialty</NavLink>
+    </div>
   );
 }
