@@ -1,79 +1,73 @@
 import React from 'react';
-import { useLocalStorage } from '../hooks/useLocalStorage';
+
 import base from '../helpers/data';
+import { useLocalStorage } from '../hooks/useLocalStorage';
+import { getLocal } from '../helpers/localStorage';
 
 export default function Tools() {
-  const foreman = localStorage.getItem('foreman');
-  const [lastFetch, setLastFetch] = useLocalStorage('lastFetch', '');
-  const [tools, setTools] = useLocalStorage('tools', []);
-  const [specialty, setSpecialty] = useLocalStorage('specialty', []);
+  const foreman = getLocal('foreman');
+  const [data, setData] = useLocalStorage('data', {});
+  const [specialty, setSpecialty] = useLocalStorage('specialty', {});
 
   React.useEffect(() => {
-    const t = new Date().toJSON();
-    const fetchTools = () => {
-      base('Inventory')
+    const fetch = async () => {
+      // Fetch Assigned tools from Tools table
+      const res = await base('Tools')
         .select({
-          view: 'API Foreman',
-          filterByFormula: `({Assigned To} = '${foreman}')`
+          view: 'API',
+          filterByFormula: `({Assigned To} = '${foreman.Name}')`
         })
-        .all()
-        .then(res => {
-          const records = res.map(rec => ({
-            id: rec.id,
-            ...rec.fields
-          }));
+        .all();
+      // Fetch all the tools from Specialty table
+      const spec = await base('Specialty')
+        .select({
+          view: 'API'
+        })
+        .all();
 
-          const num = t
-            .match(/[0-9]{2,}/g)
-            .slice(0, 5)
-            .join('');
+      const fetched = Date.now();
 
-          setLastFetch(num);
-          setTools(records.filter(rec => rec['Type'] !== 'Specialty'));
-          setSpecialty(records.filter(rec => rec['Type'] === 'Specialty'));
-        });
+      const tools = res.map(el => ({
+        id: el.id,
+        ...el.fields
+      }));
+
+      console.log('tools ···', tools);
+      setData({ ...data, fetched: fetched, tools: tools });
+
+      const specialty = spec.map(el => ({
+        id: el.id,
+        ...el.fields
+      }));
+
+      console.log('specialty ···', specialty);
+      setSpecialty({ fetched: fetched, list: specialty });
     };
-    if (!lastFetch || Number(lastFetch) - Number(t) < 10) fetchTools();
+    if (!data.fetched || Date.now() - data.fetched > 900000) fetch();
   }, []);
 
-  if (!lastFetch) {
-    return <h3>Loading...</h3>;
-  } else {
-    return (
-      <>
-        {specialty.length > 0 && (
-          <section className="specialty">
-            <h3>My Specialty Tool Loans</h3>
-            {specialty.map(rec => (
-              <div className="record" key={rec.id}>
-                <p>{rec['Name']}</p>
-                <p>{rec['Description']}</p>
-                {/* <p>{rec['Tool ID']}</p> */}
-                <p>{rec['Loan Start']}</p>
-                <p>{rec['Loan End']}</p>
-              </div>
-            ))}
-          </section>
-        )}
-        <section className="tools">
-          {tools.map(rec => (
-            <div className="record" key={rec.id}>
-              <p>{rec['Name']}</p>
-              {/* <p>{rec['Type']}</p>
+  return data && data.tools ? (
+    <>
+      <section className="tools">
+        {data.tools.map(rec => (
+          <div className="record" key={rec.id}>
+            <p>{rec['Name']}</p>
+            {/* <p>{rec['Type']}</p>
               <p>{rec['Tool ID']}</p> */}
-              <p>{rec['Description']}</p>
-              <p>{rec['Status']}</p>
-              <p>
-                <button>
-                  <span role="img" aria-label="yellow warning sign">
-                    ⚠️
-                  </span>{' '}
-                </button>
-              </p>
-            </div>
-          ))}
-        </section>
-      </>
-    );
-  }
+            <p>{rec['Description']}</p>
+            <p>{rec['Status']}</p>
+            <a
+              href={`mailto:anonaddy@bx.anonaddy.me?subject=Report Broken/Lost Tool&body=Notes:%0D%0A%0D%0A%0D%0A%0D%0A— — — — — — — —%0D%0A%0D%0ATool Type: ${rec.Type}%0D%0A%0D%0ASerial #: ${rec.Serial}%0D%0A%0D%0ATool ID: ${rec['Tool ID']}%0D%0A%0D%0AManufacturer: ${rec.Manufacturer}%0D%0A%0D%0ADescription: ${rec.Description}%0D%0A%0D%0AModel: ${rec.Model}`}
+            >
+              <span role="img" aria-label="yellow warning sign">
+                ⚠️
+              </span>{' '}
+            </a>
+          </div>
+        ))}
+      </section>
+    </>
+  ) : (
+    <h3>Loading...</h3>
+  );
 }

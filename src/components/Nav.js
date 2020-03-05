@@ -1,13 +1,14 @@
 import React from 'react';
 import { NavLink, useHistory } from 'react-router-dom';
+import { getLocal } from '../helpers/localStorage';
 
 export default function Nav() {
-  const foreman = localStorage.getItem('foreman');
+  const foreman = getLocal('foreman');
   const history = useHistory();
 
   const logout = e => {
     e.preventDefault();
-    localStorage.clear();
+    window.localStorage.clear();
     history.push('/login');
   };
   return (
@@ -21,7 +22,7 @@ export default function Nav() {
         </h3>
         {foreman && (
           <div className="foreman">
-            <p>{foreman}</p>
+            <p>{foreman.Name}</p>
             <button onClick={logout}>Logout</button>
           </div>
         )}
