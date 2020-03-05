@@ -1,9 +1,8 @@
 import React from 'react';
 import { NavLink, useHistory } from 'react-router-dom';
-import { getLocal } from '../helpers/localStorage';
 
 export default function Nav() {
-  const foreman = getLocal('foreman');
+  const foreman = JSON.parse(window.localStorage.getItem('foreman'));
   const history = useHistory();
 
   const logout = e => {

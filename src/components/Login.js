@@ -14,7 +14,7 @@ export default function Login() {
       const res = await base('Foreman')
         .select({
           view: 'API',
-          fields: ['Name', 'Total Tools', 'Inventory Count', 'Specialty Count']
+          fields: ['Name']
         })
         .all();
 
@@ -39,6 +39,7 @@ export default function Login() {
 
   const login = e => {
     e.preventDefault();
+    window.localStorage.removeItem('guys');
     history.push('/');
   };
 
