@@ -13,7 +13,7 @@ export default function SpecialtyCalendar() {
       {showCal && (
         <>
           <p>Cal</p>
-          <iframe
+          {/* <iframe
             title="Specialty Calendar"
             className="airtable-embed"
             src="https://airtable.com/embed/shrPxBnmDnm2lnEsh?backgroundColor=white"
@@ -21,7 +21,7 @@ export default function SpecialtyCalendar() {
             width="100%"
             height="250"
             style={{ backgroundColor: 'transparent', border: '1px solid #ccc' }}
-          />
+          /> */}
         </>
       )}
     </div>

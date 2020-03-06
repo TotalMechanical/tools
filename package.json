@@ -4,14 +4,13 @@
   "private": true,
   "dependencies": {
     "airtable": "^0.8.1",
-    "baseui": "^9.61.0",
+    "bootstrap": "^4.4.1",
     "node-sass": "^4.13.1",
     "react": "^16.13.0",
     "react-dom": "^16.13.0",
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.4.0",
-    "styletron-engine-atomic": "^1.4.6",
-    "styletron-react": "^5.2.7"
+    "reactstrap": "^8.4.1"
   },
   "scripts": {
     "dev": "react-scripts start",

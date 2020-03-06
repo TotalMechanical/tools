@@ -53,7 +53,7 @@ export default function Tools() {
     if (!data.fetched || Date.now() - data.fetched > 30000) fetch();
   }, []);
 
-  return data && data.tools ? (
+  return data && data.specialty && data.tools ? (
     <>
       {data.specialty.length > 0 && <MySpecialtyList tools={data.specialty} />}
       {data.tools.length > 0 && <ToolList tools={data.tools} />}

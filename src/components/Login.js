@@ -4,13 +4,17 @@ import { useHistory } from 'react-router-dom';
 import base from '../helpers/data';
 import { useLocalStorage } from '../hooks/useLocalStorage';
 
+import { Row, Col, Button, Label, Input } from 'reactstrap';
+import Loading from './Loading';
+
 export default function Login() {
   const history = useHistory();
-  const [foreman, setForeman] = useLocalStorage('foreman', {});
-  const [guys, setGuys] = useLocalStorage('guys', {});
+  const [value, setValue] = React.useState('');
+  const [guys, setGuys] = React.useState([]);
+  const [, setForeman] = useLocalStorage('foreman', {});
 
   React.useEffect(() => {
-    const fetchForeman = async () => {
+    const fetchGuys = async () => {
       const res = await base('Foreman')
         .select({
           view: 'API',
@@ -18,52 +22,52 @@ export default function Login() {
         })
         .all();
 
-      const records = res.map(rec => ({
+      const guys = res.map(rec => ({
         id: rec.id,
         ...rec.fields
       }));
-      const guys = {
-        fetched: Date.now(),
-        list: records
-      };
-      console.log('guys ···', guys);
       setGuys(guys);
     };
 
-    fetchForeman();
+    fetchGuys();
   }, []);
 
-  const handleChange = e => {
-    setForeman(guys.list.find(el => el.id === e.target.value));
-  };
+  const handleChange = e => setValue(e.target.value);
 
   const login = e => {
     e.preventDefault();
-    window.localStorage.removeItem('guys');
+    setForeman(guys.find(guy => guy.id === value));
     history.push('/');
   };
 
   return (
-    <div className="login">
-      <h1>Total Mechanical Tools</h1>
-      {guys && guys.list ? (
-        <>
-          <label htmlFor="foreman-list">Who are you?</label>
-          <select id="foreman-list" onChange={handleChange}>
-            <option value="">~ Select your name ~</option>
-            {guys.list.map(guy => (
-              <option key={guy.id} value={guy.id}>
-                {guy.Name}
-              </option>
-            ))}
-          </select>
-          <button onClick={login} disabled={!foreman}>
-            GO
-          </button>
-        </>
-      ) : (
-        <h3>Loading...</h3>
-      )}
-    </div>
+    <Row className="justify-content-center">
+      <Col sm="8" md="6">
+        {guys && guys.length > 0 ? (
+          <>
+            <Label for="list">Who are you?</Label>
+            <Input
+              className="mb-3"
+              type="select"
+              name="select"
+              id="list"
+              onChange={handleChange}
+            >
+              <option value="">Select your name...</option>
+              {guys.map(guy => (
+                <option key={guy.id} value={guy.id}>
+                  {guy.Name}
+                </option>
+              ))}
+            </Input>
+            <Button block color="primary" onClick={login} disabled={!value}>
+              Go
+            </Button>
+          </>
+        ) : (
+          <Loading />
+        )}
+      </Col>
+    </Row>
   );
 }

@@ -6,6 +6,8 @@ import {
   NavLink
 } from 'react-router-dom';
 
+import { Container } from 'reactstrap';
+
 import Nav from './components/Nav';
 import Login from './components/Login';
 import PrivateRoute from './components/PrivateRoute';
@@ -17,21 +19,23 @@ export default function App() {
     <Router>
       <Nav />
 
-      <Switch>
-        <PrivateRoute exact path="/">
-          <SubNav />
-          <Tools />
-        </PrivateRoute>
+      <Container fluid="lg">
+        <Switch>
+          <PrivateRoute exact path="/">
+            <SubNav />
+            <Tools />
+          </PrivateRoute>
 
-        <PrivateRoute path="/specialty">
-          <SubNav />
-          <Specialty />
-        </PrivateRoute>
+          <PrivateRoute path="/specialty">
+            <SubNav />
+            <Specialty />
+          </PrivateRoute>
 
-        <Route path="/login">
-          <Login />
-        </Route>
-      </Switch>
+          <Route path="/login">
+            <Login />
+          </Route>
+        </Switch>
+      </Container>
     </Router>
   );
 }

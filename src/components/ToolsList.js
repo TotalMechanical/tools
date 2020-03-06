@@ -3,6 +3,7 @@ import React from 'react';
 export default function ToolList({ tools }) {
   const [filterResults, setFilterResults] = React.useState(tools);
   const [query, setQuery] = React.useState('');
+
   React.useEffect(() => {
     const results = tools.filter(
       tool =>
@@ -10,7 +11,7 @@ export default function ToolList({ tools }) {
         tool['Tool ID'].toLowerCase().includes(query.toLowerCase())
     );
     setFilterResults(results);
-  }, [query]);
+  }, [query, tools]);
 
   const handleChange = e => setQuery(e.target.value);
   const clearFilter = () => setQuery('');
