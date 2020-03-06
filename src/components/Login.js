@@ -61,7 +61,7 @@ export default function Login() {
               ))}
             </Input>
             <Button block color="primary" onClick={login} disabled={!value}>
-              Go
+              Login to My Tools
             </Button>
           </>
         ) : (

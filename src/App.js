@@ -6,9 +6,9 @@ import {
   NavLink
 } from 'react-router-dom';
 
-import { Container } from 'reactstrap';
+import { Container, Nav, NavItem } from 'reactstrap';
 
-import Nav from './components/Nav';
+import Navigation from './components/Nav';
 import Login from './components/Login';
 import PrivateRoute from './components/PrivateRoute';
 import Tools from './components/Tools';
@@ -17,7 +17,7 @@ import Specialty from './components/Specialty';
 export default function App() {
   return (
     <Router>
-      <Nav />
+      <Navigation />
 
       <Container fluid="lg">
         <Switch>
@@ -42,11 +42,17 @@ export default function App() {
 
 function SubNav() {
   return (
-    <div className="sub-nav">
-      <NavLink exact to="/">
-        My Tools
-      </NavLink>
-      <NavLink to="/specialty">Specialty</NavLink>
-    </div>
+    <Nav className="mb-2" tabs>
+      <NavItem>
+        <NavLink className="nav-link" exact to="/">
+          My Tools
+        </NavLink>
+      </NavItem>
+      <NavItem>
+        <NavLink className="nav-link" to="/specialty">
+          All Specialty Tools
+        </NavLink>
+      </NavItem>
+    </Nav>
   );
 }

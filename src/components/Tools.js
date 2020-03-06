@@ -5,8 +5,9 @@ import base from '../helpers/data';
 import { useLocalStorage } from '../hooks/useLocalStorage';
 
 // Components
+import Loading from './Loading';
 import MySpecialtyList from './MySpecialtyList';
-import ToolList from './ToolsList';
+import MyToolsList from './MyToolsList';
 
 export default function Tools() {
   const foreman = JSON.parse(window.localStorage.getItem('foreman'));
@@ -54,17 +55,16 @@ export default function Tools() {
     if (!data.fetched || Date.now() - data.fetched > 30000) fetch();
   }, [foreman, data, setData]);
 
-  return data &&
-    data.foreman &&
-    data.foreman.specialty &&
-    data.foreman.tools ? (
+  const user = data && data.foreman;
+  const myTools = user && data.foreman.tools;
+  const mySpecialty = user && data.foreman.specialty;
+
+  return data && user && myTools && mySpecialty ? (
     <>
-      {data.foreman.specialty.length > 0 && (
-        <MySpecialtyList tools={data.foreman.specialty} />
-      )}
-      {data.foreman.tools.length > 0 && <ToolList tools={data.foreman.tools} />}
+      {mySpecialty.length > 0 && <MySpecialtyList tools={mySpecialty} />}
+      {myTools.length > 0 && <MyToolsList tools={myTools} />}
     </>
   ) : (
-    <h3>Loading...</h3>
+    <Loading />
   );
 }

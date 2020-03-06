@@ -1,18 +1,32 @@
 import React from 'react';
 
+import { Table } from 'reactstrap';
+
 export default function MySpecialtyList({ tools }) {
   return (
-    <section className="specialty">
-      <h3>My Specialty Tool Loans</h3>
-      {tools.map(tool => (
-        <div className="record" key={tool.id}>
-          <p>{tool['Name']}</p>
-          <p>{tool['Description']}</p>
-          {/* <p>{rec['Tool ID']}</p> */}
-          <p>{tool['Loan Start']}</p>
-          <p>{tool['Loan End']}</p>
-        </div>
-      ))}
-    </section>
+    <div className="mb-2 bg-light">
+      <Table className="text-nowrap mb-0" size="sm" borderless responsive>
+        <thead>
+          <tr>
+            <th>Specialty Tool</th>
+            {/* <th>Desc</th> */}
+            {/* <th>Tool ID</th> */}
+            <th>Loan Start</th>
+            <th>Loan End</th>
+          </tr>
+        </thead>
+        <tbody>
+          {tools.map(tool => (
+            <tr key={tool.id}>
+              <td>{tool['Name']}</td>
+              {/* <td>{tool['Description']}</td> */}
+              {/* <td>{rec['Tool ID']}</td> */}
+              <td>{tool['Loan Start']}</td>
+              <td>{tool['Loan End']}</td>
+            </tr>
+          ))}
+        </tbody>
+      </Table>
+    </div>
   );
 }
