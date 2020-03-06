@@ -1,9 +1,34 @@
 import React from 'react';
 
 export default function ToolList({ tools }) {
+  const [filterResults, setFilterResults] = React.useState(tools);
+  const [query, setQuery] = React.useState('');
+  React.useEffect(() => {
+    const results = tools.filter(
+      tool =>
+        tool.Name.toLowerCase().includes(query.toLowerCase()) ||
+        tool['Tool ID'].toLowerCase().includes(query.toLowerCase())
+    );
+    setFilterResults(results);
+  }, [query]);
+
+  const handleChange = e => setQuery(e.target.value);
+  const clearFilter = () => setQuery('');
+
   return (
     <section className="tools">
-      {tools.map(tool => (
+      <form>
+        <label htmlFor="filter">Filter by:</label>
+        <input
+          id="filter"
+          type="text"
+          placeholder="Name, Tool ID, Description"
+          value={query}
+          onChange={handleChange}
+        />
+      </form>
+      <button onClick={clearFilter}>Clear</button>
+      {filterResults.map(tool => (
         <div className="record" key={tool.id}>
           <p>{tool['Name']}</p>
           {/* <p>{rec['Type']}</p>

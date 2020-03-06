@@ -49,7 +49,7 @@ export default function Tools() {
         )
       });
     };
-    // Will allow fetch if no data or it's been 30 sec since last fetch
+    // Will allow fetch if no data or it's been more than 30 sec since last fetch
     if (!data.fetched || Date.now() - data.fetched > 30000) fetch();
   }, []);
 
