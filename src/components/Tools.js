@@ -9,9 +9,8 @@ import MySpecialtyList from './MySpecialtyList';
 import ToolList from './ToolsList';
 
 export default function Tools() {
-  const [foreman, setForeman] = useLocalStorage('foreman', {});
+  const foreman = JSON.parse(window.localStorage.getItem('foreman'));
   const [data, setData] = useLocalStorage('data', {});
-  const [, setSpecialty] = useLocalStorage('specialty', {});
 
   React.useEffect(() => {
     const fetch = async () => {
@@ -30,33 +29,40 @@ export default function Tools() {
 
       // Fetch this foreman's info from Foreman table
       const user = await base('Foreman').find(foreman.id);
-      setForeman({ ...foreman, ...user.fields });
 
       const fetched = Date.now();
 
       // Set the specialty tools data
       const specialtyTools = spec.map(el => ({ id: el.id, ...el.fields }));
-      setSpecialty({ fetched: fetched, list: specialtyTools });
 
       // Set the tools data
       const tools = res.map(el => ({ id: el.id, ...el.fields }));
       setData({
         ...data,
         fetched: fetched,
-        tools: tools,
-        specialty: specialtyTools.filter(
-          el => el['Assigned To'] && el['Assigned To'][0] === foreman.id
-        )
+        foreman: {
+          stats: user.fields,
+          tools: tools,
+          specialty: specialtyTools.filter(
+            el => el['Assigned To'] && el['Assigned To'][0] === foreman.id
+          )
+        },
+        specialty: specialtyTools
       });
     };
     // Will allow fetch if no data or it's been more than 30 sec since last fetch
     if (!data.fetched || Date.now() - data.fetched > 30000) fetch();
-  }, []);
+  }, [foreman, data, setData]);
 
-  return data && data.specialty && data.tools ? (
+  return data &&
+    data.foreman &&
+    data.foreman.specialty &&
+    data.foreman.tools ? (
     <>
-      {data.specialty.length > 0 && <MySpecialtyList tools={data.specialty} />}
-      {data.tools.length > 0 && <ToolList tools={data.tools} />}
+      {data.foreman.specialty.length > 0 && (
+        <MySpecialtyList tools={data.foreman.specialty} />
+      )}
+      {data.foreman.tools.length > 0 && <ToolList tools={data.foreman.tools} />}
     </>
   ) : (
     <h3>Loading...</h3>
