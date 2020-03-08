@@ -42,7 +42,7 @@ export default function App() {
 
 function SubNav() {
   return (
-    <Nav className="mb-2" tabs>
+    <Nav className="mb-2" pills>
       <NavItem>
         <NavLink className="nav-link" exact to="/">
           My Tools
