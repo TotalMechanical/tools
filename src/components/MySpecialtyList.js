@@ -3,6 +3,15 @@ import React from 'react';
 import { Table } from 'reactstrap';
 
 export default function MySpecialtyList({ tools }) {
+  const formatDate = date => {
+    const d = new Date(date);
+    const dtf = new Intl.DateTimeFormat('en', {
+      month: 'short',
+      day: 'numeric'
+    });
+    const [{ value: mo }, , { value: da }] = dtf.formatToParts(d);
+    return `${mo} ${da}`;
+  };
   return (
     <div className="mb-2 bg-light">
       <Table className="text-nowrap mb-0" size="sm" borderless responsive>
@@ -21,8 +30,8 @@ export default function MySpecialtyList({ tools }) {
               <td>{tool['Name']}</td>
               {/* <td>{tool['Description']}</td> */}
               {/* <td>{rec['Tool ID']}</td> */}
-              <td>{tool['Loan Start']}</td>
-              <td>{tool['Loan End']}</td>
+              <td>{formatDate(tool['Loan Start'])}</td>
+              <td>{formatDate(tool['Loan End'])}</td>
             </tr>
           ))}
         </tbody>

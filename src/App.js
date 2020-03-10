@@ -6,7 +6,7 @@ import {
   NavLink
 } from 'react-router-dom';
 
-import { Container, Nav, NavItem } from 'reactstrap';
+import { Container, Row, Col, Nav, NavItem } from 'reactstrap';
 
 import Navigation from './components/Nav';
 import Login from './components/Login';
@@ -20,21 +20,25 @@ export default function App() {
       <Navigation />
 
       <Container fluid="lg">
-        <Switch>
-          <PrivateRoute exact path="/">
-            <SubNav />
-            <Tools />
-          </PrivateRoute>
+        <Row>
+          <Col lg={{ size: 10, offset: 1 }} xl={{ size: 8, offset: 2 }}>
+            <Switch>
+              <PrivateRoute exact path="/">
+                <SubNav />
+                <Tools />
+              </PrivateRoute>
 
-          <PrivateRoute path="/specialty">
-            <SubNav />
-            <Specialty />
-          </PrivateRoute>
+              <PrivateRoute path="/specialty">
+                <SubNav />
+                <Specialty />
+              </PrivateRoute>
 
-          <Route path="/login">
-            <Login />
-          </Route>
-        </Switch>
+              <Route path="/login">
+                <Login />
+              </Route>
+            </Switch>
+          </Col>
+        </Row>
       </Container>
     </Router>
   );

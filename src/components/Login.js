@@ -60,7 +60,7 @@ export default function Login() {
                 </option>
               ))}
             </Input>
-            <Button block color="primary" onClick={login} disabled={!value}>
+            <Button block onClick={login} disabled={!value}>
               Login to My Tools
             </Button>
           </>
