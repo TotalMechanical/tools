@@ -1,7 +1,8 @@
 {
   "build": {
     "env": {
-      "REACT_APP_AIRTABLE_API_KEY": "@airtable-api"
+      "REACT_APP_AIRTABLE_API_KEY": "@airtable-api",
+      "REACT_APP_EMAIL": "@tool-email"
     }
   },
   "github": {
