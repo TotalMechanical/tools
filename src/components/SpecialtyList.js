@@ -25,7 +25,7 @@ Model: ${rec.Model}`;
   return (
     <>
       <p className="h-scroll text-muted bg-light py-1 mb-1 text-center small">
-        ‹‹ ~ ~ This table can scroll on small screens ~ ~ ››
+        ‹‹ This table can scroll on small screens ››
       </p>
       <Table className="text-nowrap" responsive>
         <thead>

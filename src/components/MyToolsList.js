@@ -59,7 +59,7 @@ Model: ${tool.Model}`;
         </Row>
       </Form>
       <p className="h-scroll text-muted bg-light py-1 mb-1 text-center small">
-        ‹‹ ~ ~ This table can scroll on small screens ~ ~ ››
+        ‹‹ This table can scroll on small screens ››
       </p>
 
       <Table className="mb-0 text-nowrap" responsive>
