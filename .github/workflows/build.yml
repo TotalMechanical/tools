@@ -16,10 +16,10 @@ jobs:
       - name: build
         run: npm run build
       - name: deploy
-        uses: peaceiris/actions-gh-pages@v3
+        uses: peaceiris/actions-gh-pages@v1.1.0
         if: contains(github.ref, 'main')
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
           DEPLOY_KEY: ${{ secrets.ACTIONS_DEPLOY_KEY }}
           REACT_APP_AIRTABLE_API_KEY: ${{ secrets.REACT_APP_AIRTABLE_API_KEY }}
           REACT_APP_EMAIL: ${{ secrets.REACT_APP_EMAIL }}
