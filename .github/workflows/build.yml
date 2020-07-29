@@ -20,6 +20,5 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./build
           publish_branch: gh-pages
-        env:
           REACT_APP_AIRTABLE_API_KEY: ${{ secrets.REACT_APP_AIRTABLE_API_KEY }}
           REACT_APP_EMAIL: ${{ secrets.REACT_APP_EMAIL }}
