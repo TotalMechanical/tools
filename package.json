@@ -1,5 +1,6 @@
 {
   "name": "tools",
+  "description": "Tool tracking web app for Total Mechanical",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
