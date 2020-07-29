@@ -8,20 +8,18 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-
     steps:
       - uses: actions/checkout@main
-      - name: npm install
-        run: npm install
-      - name: build
-        run: npm run build
-      - name: deploy
-        uses: peaceiris/actions-gh-pages@v1.1.0
-        if: contains(github.ref, 'main')
+      - run: npm install
+
+      - run: npm run build
+
+      - name: Deploy
+        uses: peaceiris/actions-gh-pages@v3.6.4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./build
+          publish_branch: gh-pages
         env:
-          GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
-          DEPLOY_KEY: ${{ secrets.ACTIONS_DEPLOY_KEY }}
           REACT_APP_AIRTABLE_API_KEY: ${{ secrets.REACT_APP_AIRTABLE_API_KEY }}
           REACT_APP_EMAIL: ${{ secrets.REACT_APP_EMAIL }}
-          PUBLISH_DIR: ./build
-          PUBLISH_BRANCH: gh-pages
