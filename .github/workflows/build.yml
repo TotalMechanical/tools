@@ -1,23 +1,23 @@
-name: CI
+name: GH Pages
 
 on:
   push:
     branches:
-      - master
+      - main
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@master
+      - uses: actions/checkout@main
       - name: npm install
         run: npm install
       - name: build
         run: npm run build
       - name: deploy
         uses: peaceiris/actions-gh-pages@v3
-        if: contains(github.ref, 'master')
+        if: contains(github.ref, 'main')
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           DEPLOY_KEY: ${{ secrets.ACTIONS_DEPLOY_KEY }}
