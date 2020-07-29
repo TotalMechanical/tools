@@ -1,22 +1,17 @@
-import React from 'react';
-import {
-  BrowserRouter as Router,
-  Route,
-  Switch,
-  NavLink
-} from 'react-router-dom';
+import React from 'react'
+import { HashRouter, Route, Switch, NavLink } from 'react-router-dom'
 
-import { Container, Row, Col, Nav, NavItem } from 'reactstrap';
+import { Container, Row, Col, Nav, NavItem } from 'reactstrap'
 
-import Navigation from './components/Nav';
-import Login from './components/Login';
-import PrivateRoute from './components/PrivateRoute';
-import Tools from './components/Tools';
-import Specialty from './components/Specialty';
+import Navigation from './components/Nav'
+import Login from './components/Login'
+import PrivateRoute from './components/PrivateRoute'
+import Tools from './components/Tools'
+import Specialty from './components/Specialty'
 
 export default function App() {
   return (
-    <Router>
+    <HashRouter>
       <Navigation />
 
       <Container fluid="lg">
@@ -40,8 +35,8 @@ export default function App() {
           </Col>
         </Row>
       </Container>
-    </Router>
-  );
+    </HashRouter>
+  )
 }
 
 function SubNav() {
@@ -58,5 +53,5 @@ function SubNav() {
         </NavLink>
       </NavItem>
     </Nav>
-  );
+  )
 }
