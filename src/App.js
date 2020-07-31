@@ -11,7 +11,7 @@ import Specialty from './components/Specialty'
 
 export default function App() {
   return (
-    <HashRouter>
+    <HashRouter basename={process.env.PUBLIC_URL}>
       <Navigation />
 
       <Container fluid="lg">
