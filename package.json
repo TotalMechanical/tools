@@ -1,13 +1,11 @@
 {
   "name": "tools",
   "description": "Tool tracking web app for Total Mechanical",
-  "homepage": "https://totalmechanical.github.io",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
     "airtable": "^0.8.1",
     "bootstrap": "^4.5.0",
-    "gh-pages": "^3.1.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-router-dom": "^5.2.0",
@@ -17,8 +15,6 @@
   "scripts": {
     "dev": "react-scripts start",
     "build": "react-scripts build",
-    "predeploy": "npm run build",
-    "deploy": "gh-pages -d build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
