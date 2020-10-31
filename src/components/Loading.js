@@ -1,5 +1,5 @@
-import React from 'react';
-import { Spinner } from 'reactstrap';
+import * as React from 'react'
+import { Spinner } from 'reactstrap'
 
 export default function Loading() {
   return (
@@ -9,5 +9,5 @@ export default function Loading() {
       type="grow"
       color="secondary"
     />
-  );
+  )
 }

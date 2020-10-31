@@ -1,12 +1,12 @@
-import React from 'react';
+import * as React from 'react'
 
-import { Table } from 'reactstrap';
+import { Table } from 'reactstrap'
 
 export default function SpecialtyList({ tools }) {
   // Email formatting for Request Links
-  const to = process.env.REACT_APP_EMAIL;
-  const subject = 'Request Specialty Tool';
-  const body = rec => `(Desired) Loan Start Date: 
+  const to = process.env.REACT_APP_EMAIL
+  const subject = 'Request Specialty Tool'
+  const body = (rec) => `(Desired) Loan Start Date: 
 (Desired) Loan End Date:
 
 Comments:
@@ -17,10 +17,10 @@ Comments:
 Tool ID: ${rec['Tool ID']}
 Manufacturer: ${rec.Manufacturer}
 Description: ${rec.Description}
-Model: ${rec.Model}`;
+Model: ${rec.Model}`
 
-  const email = rec =>
-    encodeURI(`mailto:${to}?subject=${subject}&body=${body(rec)}`);
+  const email = (rec) =>
+    encodeURI(`mailto:${to}?subject=${subject}&body=${body(rec)}`)
 
   return (
     <>
@@ -39,7 +39,7 @@ Model: ${rec.Model}`;
           </tr>
         </thead>
         <tbody>
-          {tools.map(rec => (
+          {tools.map((rec) => (
             <tr key={rec.id}>
               <td className="align-middle">{rec['Name']}</td>
               <td className="align-middle">{rec['Description']}</td>
@@ -64,5 +64,5 @@ Model: ${rec.Model}`;
         }
       `}</style>
     </>
-  );
+  )
 }

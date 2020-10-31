@@ -1,5 +1,5 @@
-import React from 'react';
-import { Route, Redirect } from 'react-router-dom';
+import * as React from 'react'
+import { Route, Redirect } from 'react-router-dom'
 
 export default function PrivateRoute({ children, ...rest }) {
   return (
@@ -9,5 +9,5 @@ export default function PrivateRoute({ children, ...rest }) {
         localStorage.getItem('foreman') ? children : <Redirect to="/login" />
       }
     />
-  );
+  )
 }

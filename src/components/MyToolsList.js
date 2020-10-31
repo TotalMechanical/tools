@@ -1,27 +1,27 @@
-import React from 'react';
+import * as React from 'react'
 
-import { Table, Row, Col, Form, Label, Input, Button } from 'reactstrap';
+import { Table, Row, Col, Form, Label, Input, Button } from 'reactstrap'
 
 export default function MyToolsList({ tools }) {
-  const [filterResults, setFilterResults] = React.useState(tools);
-  const [query, setQuery] = React.useState('');
+  const [filterResults, setFilterResults] = React.useState(tools)
+  const [query, setQuery] = React.useState('')
 
   React.useEffect(() => {
     const results = tools.filter(
-      tool =>
+      (tool) =>
         tool.Name.toLowerCase().includes(query.toLowerCase()) ||
         tool['Tool ID'].toLowerCase().includes(query.toLowerCase())
-    );
-    setFilterResults(results);
-  }, [query, tools]);
+    )
+    setFilterResults(results)
+  }, [query, tools])
 
-  const handleChange = e => setQuery(e.target.value);
-  const clearFilter = () => setQuery('');
+  const handleChange = (e) => setQuery(e.target.value)
+  const clearFilter = () => setQuery('')
 
   // Email formatting for Report Links
-  const to = process.env.REACT_APP_EMAIL;
-  const subject = 'Report Broken/Lost Tool';
-  const body = tool => `Notes:
+  const to = process.env.REACT_APP_EMAIL
+  const subject = 'Report Broken/Lost Tool'
+  const body = (tool) => `Notes:
 
 
 
@@ -31,10 +31,10 @@ Serial #: ${tool.Serial}
 Tool ID: ${tool['Tool ID']}
 Manufacturer: ${tool.Manufacturer}
 Description: ${tool.Description}
-Model: ${tool.Model}`;
+Model: ${tool.Model}`
 
-  const email = rec =>
-    encodeURI(`mailto:${to}?subject=${subject}&body=${body(rec)}`);
+  const email = (rec) =>
+    encodeURI(`mailto:${to}?subject=${subject}&body=${body(rec)}`)
 
   return (
     <>
@@ -74,7 +74,7 @@ Model: ${tool.Model}`;
           </tr>
         </thead>
         <tbody>
-          {filterResults.map(tool => (
+          {filterResults.map((tool) => (
             <tr key={tool.id}>
               <td className="align-middle">{tool['Name']}</td>
               {/* <td className="align-middle">{rec['Tytde']}</td>
@@ -98,5 +98,5 @@ Model: ${tool.Model}`;
         }
       `}</style>
     </>
-  );
+  )
 }

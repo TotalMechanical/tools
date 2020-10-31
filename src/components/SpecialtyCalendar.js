@@ -1,11 +1,11 @@
-import React from 'react';
+import * as React from 'react'
 
-import { Button } from 'reactstrap';
+import { Button } from 'reactstrap'
 
 export default function SpecialtyCalendar() {
-  const [showCal, setShowCal] = React.useState(false);
+  const [showCal, setShowCal] = React.useState(false)
 
-  const toggleCal = () => setShowCal(prev => !prev);
+  const toggleCal = () => setShowCal((prev) => !prev)
 
   return (
     <div className="mb-2">
@@ -26,5 +26,5 @@ export default function SpecialtyCalendar() {
         </>
       )}
     </div>
-  );
+  )
 }

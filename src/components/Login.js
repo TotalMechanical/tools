@@ -1,17 +1,17 @@
-import React from 'react';
-import { useHistory } from 'react-router-dom';
+import * as React from 'react'
+import { useHistory } from 'react-router-dom'
 
-import base from '../helpers/data';
-import { useLocalStorage } from '../hooks/useLocalStorage';
+import base from '../helpers/data'
+import { useLocalStorage } from '../hooks/useLocalStorage'
 
-import { Row, Col, Button, Label, Input } from 'reactstrap';
-import Loading from './Loading';
+import { Row, Col, Button, Label, Input } from 'reactstrap'
+import Loading from './Loading'
 
 export default function Login() {
-  const history = useHistory();
-  const [value, setValue] = React.useState('');
-  const [guys, setGuys] = React.useState([]);
-  const [, setForeman] = useLocalStorage('foreman', {});
+  const history = useHistory()
+  const [value, setValue] = React.useState('')
+  const [guys, setGuys] = React.useState([])
+  const [, setForeman] = useLocalStorage('foreman', {})
 
   React.useEffect(() => {
     const fetchGuys = async () => {
@@ -20,25 +20,25 @@ export default function Login() {
           view: 'API',
           fields: ['Name']
         })
-        .all();
+        .all()
 
-      const guys = res.map(rec => ({
+      const guys = res.map((rec) => ({
         id: rec.id,
         ...rec.fields
-      }));
-      setGuys(guys);
-    };
+      }))
+      setGuys(guys)
+    }
 
-    fetchGuys();
-  }, []);
+    fetchGuys()
+  }, [])
 
-  const handleChange = e => setValue(e.target.value);
+  const handleChange = (e) => setValue(e.target.value)
 
-  const login = e => {
-    e.preventDefault();
-    setForeman(guys.find(guy => guy.id === value));
-    history.push('/');
-  };
+  const login = (e) => {
+    e.preventDefault()
+    setForeman(guys.find((guy) => guy.id === value))
+    history.push('/')
+  }
 
   return (
     <Row className="justify-content-center">
@@ -54,7 +54,7 @@ export default function Login() {
               onChange={handleChange}
             >
               <option value="">Select your name...</option>
-              {guys.map(guy => (
+              {guys.map((guy) => (
                 <option key={guy.id} value={guy.id}>
                   {guy.Name}
                 </option>
@@ -69,5 +69,5 @@ export default function Login() {
         )}
       </Col>
     </Row>
-  );
+  )
 }

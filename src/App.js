@@ -1,4 +1,4 @@
-import React from 'react'
+import * as React from 'react'
 import { HashRouter, Route, Switch, NavLink } from 'react-router-dom'
 
 import { Container, Row, Col, Nav, NavItem } from 'reactstrap'

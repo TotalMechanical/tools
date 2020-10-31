@@ -1,17 +1,17 @@
-import React from 'react';
-import { useHistory } from 'react-router-dom';
+import * as React from 'react'
+import { useHistory } from 'react-router-dom'
 
-import { Container, Row, Col, Nav, NavItem } from 'reactstrap';
+import { Container, Row, Col, Nav, NavItem } from 'reactstrap'
 
-export default function() {
-  const foreman = JSON.parse(window.localStorage.getItem('foreman'));
-  const history = useHistory();
+export default function () {
+  const foreman = JSON.parse(window.localStorage.getItem('foreman'))
+  const history = useHistory()
 
-  const logout = e => {
-    e.preventDefault();
-    window.localStorage.clear();
-    history.push('/login');
-  };
+  const logout = (e) => {
+    e.preventDefault()
+    window.localStorage.clear()
+    history.push('/login')
+  }
 
   return (
     <div className="bg-dark text-white py-1 mb-2">
@@ -44,5 +44,5 @@ export default function() {
         </Row>
       </Container>
     </div>
-  );
+  )
 }

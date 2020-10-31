@@ -1,17 +1,17 @@
-import React from 'react';
+import * as React from 'react'
 
 // Helper Code + Custom Hooks
-import base from '../helpers/data';
-import { useLocalStorage } from '../hooks/useLocalStorage';
+import base from '../helpers/data'
+import { useLocalStorage } from '../hooks/useLocalStorage'
 
 // Components
-import Loading from './Loading';
-import MySpecialtyList from './MySpecialtyList';
-import MyToolsList from './MyToolsList';
+import Loading from './Loading'
+import MySpecialtyList from './MySpecialtyList'
+import MyToolsList from './MyToolsList'
 
 export default function Tools() {
-  const foreman = JSON.parse(window.localStorage.getItem('foreman'));
-  const [data, setData] = useLocalStorage('data', {});
+  const foreman = JSON.parse(window.localStorage.getItem('foreman'))
+  const [data, setData] = useLocalStorage('data', {})
 
   React.useEffect(() => {
     const fetch = async () => {
@@ -21,23 +21,21 @@ export default function Tools() {
           view: 'API',
           filterByFormula: `({Assigned To} = '${foreman.Name}')`
         })
-        .all();
+        .all()
 
       // Fetch all the tools from Specialty table
-      const spec = await base('Specialty')
-        .select({ view: 'API' })
-        .all();
+      const spec = await base('Specialty').select({ view: 'API' }).all()
 
       // Fetch this foreman's info from Foreman table
-      const user = await base('Foreman').find(foreman.id);
+      const user = await base('Foreman').find(foreman.id)
 
-      const fetched = Date.now();
+      const fetched = Date.now()
 
       // Set the specialty tools data
-      const specialtyTools = spec.map(el => ({ id: el.id, ...el.fields }));
+      const specialtyTools = spec.map((el) => ({ id: el.id, ...el.fields }))
 
       // Set the tools data
-      const tools = res.map(el => ({ id: el.id, ...el.fields }));
+      const tools = res.map((el) => ({ id: el.id, ...el.fields }))
       setData({
         ...data,
         fetched: fetched,
@@ -45,19 +43,19 @@ export default function Tools() {
           stats: user.fields,
           tools: tools,
           specialty: specialtyTools.filter(
-            el => el['Assigned To'] && el['Assigned To'][0] === foreman.id
+            (el) => el['Assigned To'] && el['Assigned To'][0] === foreman.id
           )
         },
         specialty: specialtyTools
-      });
-    };
+      })
+    }
     // Will allow fetch if no data or it's been more than 30 sec since last fetch
-    if (!data.fetched || Date.now() - data.fetched > 30000) fetch();
-  }, [foreman, data, setData]);
+    if (!data.fetched || Date.now() - data.fetched > 30000) fetch()
+  }, [foreman, data, setData])
 
-  const user = data && data.foreman;
-  const myTools = user && data.foreman.tools;
-  const mySpecialty = user && data.foreman.specialty;
+  const user = data && data.foreman
+  const myTools = user && data.foreman.tools
+  const mySpecialty = user && data.foreman.specialty
 
   return data && user && myTools && mySpecialty ? (
     <>
@@ -66,5 +64,5 @@ export default function Tools() {
     </>
   ) : (
     <Loading />
-  );
+  )
 }
